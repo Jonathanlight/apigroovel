@@ -1,0 +1,29 @@
+{
+	"name": "groovel/api",
+    "description": "hybrid cms for web artisan",
+    "keywords": ["cms","framework"],
+    "license": "GPLv2",
+    "homepage": "http://www.groovelcms.com",
+    "authors": [
+        {
+            "name": "francois varnier",
+            "email": "groovelcms@gmail.com"
+        }
+    ],
+	"require": {
+	    "laravel/framework":"5.2.31",
+		"groovel/cmsgroovel":"dev-master",
+		 "dingo/api":"1.0.x@dev",
+		 "tymon/jwt-auth":"0.5.*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4.0",
+		"phpspec/phpspec": "~2.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Groovel\\Restapi\\": "src/"
+		}
+	},
+	 "minimum-stability": "dev"
+}
