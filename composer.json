@@ -1,6 +1,6 @@
 {
 	"name": "groovel/api",
-    "description": "hybrid cms for web artisan",
+    "description": "api rest for groovel platform",
     "keywords": ["cms","framework"],
     "license": "GPLv2",
     "homepage": "http://www.groovelcms.com",
@@ -25,5 +25,6 @@
 			"Groovel\\Restapi\\": "src/"
 		}
 	},
+	
 	 "minimum-stability": "dev"
 }
