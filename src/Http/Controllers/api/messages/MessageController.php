@@ -29,8 +29,15 @@ class MessageController extends Controller
         $messages=array();
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
-            } else{//list all messages and returns
+            } else{//sendmess
         	
+            	$mess = $request->only('subject', 'recipient','author','body');
+            	$message=new Messages();
+            	$message->subject=$mess['subject'];
+            	$message->recipient=$mess['recipient'];
+            	$message->author=$mess['author'];
+            	$message->body=$mess['body'];
+            	$message->save();
         	
         }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -45,6 +52,8 @@ class MessageController extends Controller
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'));
     }
+    
+   
 
      /**
      *  get all messages for a specific user
@@ -57,11 +66,11 @@ class MessageController extends Controller
     {
     	try {
     		$messages=array();
-    		if (!$user = JWTAuth::parseToken()->authenticate()) {
+    	if (!$user = JWTAuth::parseToken()->authenticate()) {
     			return response()->json(['user_not_found'], 404);
-    		} else{//list all messages and returns
-    			 
-    			$messages = Messages::all();
+    		} else{///list all messages and returns
+    			$user = app('Dingo\Api\Auth\Auth')->user();
+    			$messages =  Messages::where('recipient','=',$user['pseudo'])->get();//Messages::all();
     			
     			// return $this->response->array(['data' => $fruits], 200);
     			return $this->collection($messages, new MessageTransformer);

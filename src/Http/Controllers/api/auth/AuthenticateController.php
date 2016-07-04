@@ -7,9 +7,11 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Routing\Controller;
+use Groovel\Cmsgroovel\models\User;
 
 class AuthenticateController extends Controller
 {
+
 
     /**
      *  API Login, on success return JWT Auth token
@@ -20,8 +22,7 @@ class AuthenticateController extends Controller
      */
     public function authenticate(Request $request)
     {
-        // grab credentials from the request
-        $credentials = $request->only('email', 'password');
+    	   $credentials = $request->only('username', 'password');
         try {
             // attempt to verify the credentials and create a token for the user
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -32,6 +33,7 @@ class AuthenticateController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
+        \Log::info(response()->json(compact('token')));
         // all good so return the token
         return response()->json(compact('token'));
     }
@@ -46,9 +48,9 @@ class AuthenticateController extends Controller
      */
     public function logout(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'token' => 'required'
-        ]);
+        ]);*/
 
         JWTAuth::invalidate($request->input('token'));
     }
@@ -88,16 +90,42 @@ class AuthenticateController extends Controller
         $token = JWTAuth::getToken();
 
         if (!$token) {
-            return $this->response->errorMethodNotAllowed('Token not provided');
+            return response()->json('Token not provided');
         }
 
         try {
             $refreshedToken = JWTAuth::refresh($token);
         } catch (JWTException $e) {
-            return $this->response->errorInternal('Not able to refresh Token');
+            return  response()->errorInternal('Not able to refresh Token');
         }
 
-        return $this->response->withArray(['token' => $refreshedToken]);
+        return response()->json(['token' => $refreshedToken]);
     }
+    
+    public function signup(Request $request)
+    {
+    	
+    	\Log::info($request);
+    	$userData = $request->only('username','email','password');
+     	$user = new User();
+   		$user->username=$userData['username'];
+    	if(!empty($userData['password'])){
+    		$user->password=\Hash::make($userData['password']);
+    	}
+    	$user->pseudo=$userData['username'];
+    	$user->email=$userData['email'];
+    	$user->activate=true;
+      	$user->save();
+    	if(!$user->id) {
+    		return response()->error('could_not_create_user', 500);
+    	}
+    
+    /*	if($hasToReleaseToken) {
+    		return $this->login($request);
+    	}*/
+    
+    	return  response()->json('account created!');
+    }
+    
 
 }

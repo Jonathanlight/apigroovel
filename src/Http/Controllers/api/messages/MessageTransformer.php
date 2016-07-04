@@ -10,6 +10,7 @@ class MessageTransformer extends TransformerAbstract
 	{
 		return [
 				'id'        => (int) $message->id,
+				'subject'        =>  ucfirst($message->subject),
 				'author'      => ucfirst($message->author),
 				'recipient'     => ucfirst($message->recipient),
 				'body'    => ucfirst($message->body),

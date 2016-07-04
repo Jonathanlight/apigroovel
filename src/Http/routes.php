@@ -12,8 +12,10 @@ Route::group(['prefix' => 'api'], function () {
 				return ['Test' => 'Hello test!'];
 			});
 
-				//$api->post('authenticate', 'Groovel\Cmsgroovel\Http\Controllers\api\AuthenticateController@authenticate');
-				//$api->get('getMessages', 'Groovel\Cmsgroovel\Http\Controllers\api\MessageController@getMessages');
+				//$api->post('auth/signup', 'Groovel\Restapi\Http\Controllers\api\auth\AuthenticateController@signup');
+				//$api->post('authenticate', 'Groovel\Restapi\Http\Controllers\api\auth\AuthenticateController@authenticate');
+				//$api->get('getMessages', 'Groovel\Restapi\Http\Controllers\api\messages\MessageController@getMessages');
+			
 
 				//$api->post('logout', 'Groovel\Cmsgroovel\Http\Controllers\api\AuthenticateController@logout');
 
