@@ -11,7 +11,7 @@
         }
     ],
 	"require": {
-	   "groovel/cmsgroovel": "dev-master"
+	   "groovel/cmsgroovel": "3.0.1-beta"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
