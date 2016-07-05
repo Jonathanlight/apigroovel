@@ -21,5 +21,7 @@
 		"psr-4": {
 			"Groovel\\Restapi\\": "src/"
 		}
-	}
+	},
+	
+	 "minimum-stability": "dev"
 }
